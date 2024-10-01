@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var nome = prompt("Qual é o seu nome?")
+        alert("Olá " + nome + ", é um prazer ter você por aqui!")
+        
+        
+        var saldo = 790
+        var extrato = [
+          { tipo: "Compra", valor: 45, data: "16-05-2005" },
+          { tipo: "Depósito", valor: 80, data: "16-05-2005" },
+        ];
+        
+        
+        const senha_da_conta = "3589"
+        
+        
+        function sua_senha() {
+          var senha = prompt("Digite sua senha:")
+          if (senha !== senha_da_conta) {
+            alert("Senha incorreta!")
+            return false
+          }
+          return true
+        }
+        
+        
+        function inicio() {
+          var escolha = prompt(`
+          Escolha uma opção:
+          1 - Saldo
+          2 - Extrato
+          3 - Saque
+          4 - Depósito
+          5 - Transferência
+          6 - Sair`)
+        
+          switch (escolha) {
+            case "1":
+              if (sua_senha()) {
+                seu_saldo()
+              } else {
+                inicio()
+              }
+              break
+            case "2":
+              if (sua_senha()) {
+                ver_extrato()
+              } else {
+                inicio()
+              }
+              break
+            case "3":
+              if (sua_senha()) {
+                sacar()
+              } else {
+                inicio()
+              }
+              break
+            case "4":
+              depositar()
+              break
+            case "5":
+              if (sua_senha()) {
+                transferir()
+              } else {
+                inicio()
+              }
+              break
+            case "6":
+              sair()
+              break
+            default:
+              erro()
+          }
+        }
+        
+        function seu_saldo() {
+          alert("Seu saldo atual é: R$" + saldo)
+          inicio();
+        }
+        
+    
+        
+        function sacar() {
+        var valor = parseFloat(prompt("Digite o valor que deseja sacar:"))
+            if (valor <= 0) {
+                alert("Operação não autorizada")
+            } else if (valor > saldo) {
+                alert("Operação não autorizada")
+            } else {
+                saldo -= valor
+                alert(`Você sacou R$ ${valor}. Seu saldo agora é R$ ${saldo}.`)
+            }
+            inicio();
+        }
+        function ver_extrato() {
+          var historico_extrato = "Seu extrato:"
+          extrato.forEach(item => {
+            historico_extrato += `${item.tipo}: R$ ${item.valor} `
+          });
+          alert(historico_extrato)
+          inicio();
+        }
+        
+        function depositar() {
+        var valor = parseFloat(prompt("Digite o valor que deseja depositar:"))
+          if (valor <= 0) {
+            alert("Operação não autorizada")
+          } else {
+            saldo += valor;
+            extrato.push({ tipo: "Depósito", valor: valor, data: new Date().toISOString().split('T')[0] }) 
+            alert(`Você depositou R$ ${valor}. Seu saldo agora é R$ ${saldo}.`)
+          }
+          inicio();
+        }        
+        
+        
+        function transferir() {
+            var conta = prompt("Informe o número da conta")
+            valor = parseInt(prompt("Quantos você quer transferir?"))
+            debugger
+            if (!/^\d+$/.test(conta)) {
+                alert("Número de conta inválido.")
+            } else if (valor > saldo || valor <= 0) {
+                alert("Operação não autorizada")
+                
+            } else {
+                saldo -= valor
+                alert(`Você transferiu ${valor} seu saldo agora é ${saldo}`)
+            }
+        }
+        
+    
+        
+        function sair() {
+          alert(nome, + " foi um prazer ter você por aqui!")
+        }
+        
+        function erro() {
+          alert("Opção inválida. Tente novamente.")
+          inicio()
+        }
+        
+        inicio()
+        </script>
+</body>
+
+</html>
